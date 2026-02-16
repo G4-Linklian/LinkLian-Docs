@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>System Version Tracker</title>
+
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  
+  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+  
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/github.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js"></script>
+
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <nav class="navbar">
+    <div class="nav-brand">LinkLian Docs</div>
+    <div class="nav-controls">
+       <select id="envSelect">
+          <option value="prod">Production</option>
+          <option value="staging">Staging</option>
+       </select>
+       <button id="reloadBtn" class="btn-icon" title="Reload">↻</button>
+    </div>
+  </nav>
+
+  <div class="layout-container">
+    
+    <aside class="sidebar">
+      <div class="sidebar-header">Versions</div>
+      <nav id="versionNav" class="version-list">
+        </nav>
+    </aside>
+
+    <main class="content-area">
+      <div id="loading" class="loading-state">
+        <div class="spinner"></div>
+      </div>
+      
+      <div id="content" class="markdown-body">
+        </div>
+    </main>
+
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>

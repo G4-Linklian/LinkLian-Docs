@@ -1,0 +1,253 @@
+/* =========================================
+   Base Styles (Desktop First)
+   ========================================= */
+:root {
+  --sidebar-width: 260px;
+  --header-height: 60px;
+  --primary-color: #0969da;
+  --border-color: #d0d7de;
+  --bg-subtle: #f6f8fa;
+  --text-main: #24292f;
+}
+
+* {
+  box-sizing: border-box; /* สำคัญมากสำหรับ Responsive */
+}
+
+body {
+  font-family: 'Inter', sans-serif;
+  margin: 0;
+  color: var(--text-main);
+  height: 100vh;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden; /* ป้องกัน scroll ซ้อน */
+}
+
+/* Navbar */
+.navbar {
+  height: var(--header-height);
+  border-bottom: 1px solid var(--border-color);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 24px;
+  background: white;
+  z-index: 20; /* ต้องอยู่เหนือ Sidebar เวลาเลื่อน */
+  flex-shrink: 0;
+}
+
+.nav-left {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.nav-brand {
+  font-weight: 600;
+  font-size: 1.1rem;
+  white-space: nowrap;
+}
+
+/* ปุ่ม Hamburger (ซ่อนบน Desktop) */
+.menu-toggle {
+  display: none; 
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 4px;
+  color: #57606a;
+}
+
+.nav-controls {
+  display: flex;
+  gap: 10px;
+}
+
+select {
+  padding: 4px 8px;
+  border-radius: 6px;
+  border: 1px solid var(--border-color);
+  background-color: white;
+  max-width: 120px; /* ป้องกัน select ยาวเกินบนมือถือ */
+}
+
+.btn-icon {
+  background: none;
+  border: 1px solid var(--border-color);
+  cursor: pointer;
+  border-radius: 4px;
+  padding: 4px 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Layout Grid */
+.layout-container {
+  display: flex;
+  flex: 1;
+  width: 100%;
+  overflow: hidden;
+  position: relative; /* สำหรับวาง Overlay */
+}
+
+/* Sidebar */
+.sidebar {
+  width: var(--sidebar-width);
+  border-right: 1px solid var(--border-color);
+  background: #fff;
+  overflow-y: auto;
+  padding: 24px 0;
+  flex-shrink: 0;
+  transition: transform 0.3s ease; /* Animation สำหรับมือถือ */
+}
+
+.sidebar-header {
+  padding: 0 24px 8px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  color: #57606a;
+  letter-spacing: 0.5px;
+}
+
+.version-list a {
+  display: block;
+  padding: 8px 24px;
+  color: var(--text-main);
+  text-decoration: none;
+  font-size: 0.9rem;
+  border-left: 3px solid transparent;
+  cursor: pointer;
+}
+
+.version-list a:hover {
+  background-color: var(--bg-subtle);
+}
+
+.version-list a.active {
+  background-color: #f0f6fc;
+  color: var(--primary-color);
+  border-left-color: var(--primary-color);
+  font-weight: 500;
+}
+
+/* Main Content */
+.content-area {
+  flex: 1;
+  overflow-y: auto;
+  padding: 40px 60px;
+  background: white;
+  width: 100%;
+}
+
+.markdown-body {
+  font-size: 16px;
+  line-height: 1.6;
+  margin: 0 auto;
+}
+
+.markdown-body h1 {
+  border-bottom: 1px solid var(--border-color);
+  padding-bottom: 0.3em;
+}
+
+.markdown-body code {
+  background: rgba(175, 184, 193, 0.2);
+  padding: 0.2em 0.4em;
+  border-radius: 6px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 85%;
+}
+
+.version-separator {
+  margin: 60px 0;
+  border: 0;
+  border-top: 2px dashed var(--border-color);
+}
+
+.loading-state {
+  display: none;
+  text-align: center;
+  padding: 20px;
+}
+
+.spinner {
+  width: 20px;
+  height: 20px;
+  border: 2px solid #ddd;
+  border-top-color: var(--primary-color);
+  border-radius: 50%;
+  animation: spin 0.6s linear infinite;
+  margin: 0 auto;
+}
+
+@keyframes spin { to { transform: rotate(360deg); } }
+
+/* Overlay สำหรับปิดเมนูบนมือถือ */
+.sidebar-overlay {
+  display: none;
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: rgba(0,0,0,0.3);
+  z-index: 15;
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+/* =========================================
+   Mobile / Tablet Responsive Styles
+   ========================================= */
+@media (max-width: 768px) {
+  
+  /* Navbar: ลด Padding และแสดงปุ่มเมนู */
+  .navbar {
+    padding: 0 16px;
+  }
+  
+  .menu-toggle {
+    display: block; /* แสดงปุ่ม Hamburger */
+  }
+
+  /* Sidebar: แปลงร่างเป็น Off-canvas Menu */
+  .sidebar {
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    z-index: 20;
+    width: 80%; /* กว้าง 80% ของจอ */
+    max-width: 300px;
+    transform: translateX(-100%); /* ซ่อนไปทางซ้าย */
+    box-shadow: none;
+  }
+
+  /* Class .open จะถูกเติมด้วย JS เมื่อกดปุ่ม */
+  .sidebar.open {
+    transform: translateX(0); /* เลื่อนออกมา */
+    box-shadow: 5px 0 15px rgba(0,0,0,0.1);
+  }
+
+  /* Overlay: แสดงเมื่อเมนูเปิด */
+  .sidebar-overlay.open {
+    display: block;
+    opacity: 1;
+  }
+
+  /* Content: ลด Padding ให้เหลือพื้นที่เนื้อหา */
+  .content-area {
+    padding: 24px 20px; /* บนล่าง 24, ซ้ายขวา 20 */
+  }
+
+  .markdown-body {
+    font-size: 15px; /* ลดขนาดฟอนต์เล็กน้อย */
+  }
+  
+  /* Select Box: ย่อให้พอดี */
+  select {
+    max-width: 100px;
+    font-size: 0.85rem;
+  }
+}
